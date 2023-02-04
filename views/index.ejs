@@ -27,7 +27,7 @@
             <a class="nav-link" href="/profile">Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout</a>
+            <a class="nav-link" href="/auth/logout">Logout</a>
           </li>
           <% } else { %>
           <li class="nav-item">
@@ -54,7 +54,7 @@
       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
         <% if ( status == "loggedIN"){ %>
         <button class="btn btn-primary"><a href="/profile" style="color: white; text-decoration: none;">Profile</a></button>
-        <button class="btn btn-primary"><a href="/logout" style="color: white; text-decoration: none;">Logout</a></button>
+        <button class="btn btn-primary"><a href="/auth/logout" style="color: white; text-decoration: none;">Logout</a></button>
         <% } else { %>
         <button class="btn btn-primary"><a href="/login" style="color: white; text-decoration: none;">Login</a></button>
         <button class="btn btn-primary"><a href="/register" style="color: white; text-decoration: none;">Register</a></button>
