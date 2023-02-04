@@ -1,14 +1,15 @@
 const db = require('../routes/db-config');
 const jwt = require('jsonwebtoken');
 
-const loggedIn = (req, res) => {
-    // TODO: Fix user loggedin status
-    if (!req.cookies.userRegistration) return next();
+const loggedIn = (req, res, next) => {
+    if (!req.cookies.userSave) return next();
     try {
-        const decoded = jwt.verify(req.cookies.userRegistration, 'mitraadvaitgarvsanyam');
+        const decoded = jwt.verify(req.cookies.userSave, 'mitrasanyamgarvadavit');
         db.query('SELECT * FROM users WHERE id = ?', [decoded.id], (err, result) => {
-            if (err) return next();
+            if (!result) return next();
             req.user = result[0];
+            console.log('User is logged in');
+            console.log(req.user);
             return next();
         }); 
     } catch (err) {

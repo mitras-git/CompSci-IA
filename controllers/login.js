@@ -15,19 +15,20 @@ const login = (req, res) => {
             } else {
                 const id = results[0].id;
                 const token = jwt.sign({ id }, "mitrasanyamgarvadavit", {
-                    expiresIn: 1
+                    expiresIn: "2d"
                 });
 
-                console.log("the token is " + token);
+                console.log("Generated cookie token is " + token);
 
                 const cookieOptions = {
                     expires: new Date(
-                        Date.now() + 24 * 60 * 60 * 1000
+                        Date.now() + "2" * 24 * 60 * 60 * 1000
                     ),
                     httpOnly: true
                 }
                 res.cookie('userSave', token, cookieOptions);
-                return res.json({ status: "success", success:"User has been logged in", data: token });
+                // return res.json({ status: "success", success:"User has been logged in", data: token });
+                res.status(200).redirect("/");
             }
         })
     } catch (err) {

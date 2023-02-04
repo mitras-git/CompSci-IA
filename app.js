@@ -22,8 +22,11 @@ db.connect((err) => {
 });
 
 app.get('/', loggedIn, (req, res) => {
-    if (!req.user) return res.render('index');
-    res.render('index', { status: "ok" ,user: req.user });
+    if (req.user) {
+        res.render('index', { user: req.user, status: 'loggedIN' });
+    } else {
+        res.render('index', { user: "not logged in", status: 'no' });
+    }
 });
 
 app.get('/register', (req, res) => {
