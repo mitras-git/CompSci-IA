@@ -17,8 +17,8 @@ const login = (req, res) => {
         db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
             console.log(results);
             if (!results || !results[0] || !await bcrypt.compare(pass, results[0].password)) {
-                res.status(401).sendFile(htmlPath + '/login.html?message=' + encodeURIComponent('Email or Password is incorrect'));
-                res.sendFile()
+                res.cookie("message", "Email or password is incorrect", { maxAge: 1000 });
+                res.status(401).sendFile(htmlPath + '/login.html');
             } else {
                 const id = results[0].id;
                 const token = jwt.sign({ id }, "mitrasanyamgarvadavit", {

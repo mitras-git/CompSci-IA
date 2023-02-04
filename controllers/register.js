@@ -1,5 +1,11 @@
 const db = require('../routes/db-config');
 const bcrypt = require('bcryptjs');
+const path = require("path");
+const express = require("express");
+const app = express();
+
+app.use(express.static(path.join(__dirname, '..' ,"public")));
+const htmlPath = path.join(__dirname, '..' ,"public");
 
 const register = (req, res) => {
     const { name, email, password, passwordConfirm } = req.body;
@@ -8,11 +14,11 @@ const register = (req, res) => {
             console.log(err);
         } else {
             if (results.length > 0) {
-                return res.json({
-                    message: 'The email is already in use'
-                })
+                res.cookie("message", "This email already exists", { maxAge: 1000 });
+                return res.status(401).sendFile(htmlPath + '/register.html');
             } else if (password != passwordConfirm) {
-                return res.json({ message: 'Passwords do not match' });
+                res.cookie("message", "Your passwords did not match", { maxAge: 1000 });
+                return res.status(401).sendFile(htmlPath + '/register.html');
             }
         }
 
