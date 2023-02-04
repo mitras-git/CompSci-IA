@@ -1,3 +1,5 @@
+// noinspection JSUnresolvedFunction,EqualityComparisonWithCoercionJS
+
 const db = require('../routes/db-config');
 const bcrypt = require('bcryptjs');
 const path = require("path");
@@ -25,7 +27,7 @@ const register = (req, res) => {
         let hashedPassword = await bcrypt.hash(password, 8);
         console.log(hashedPassword);
 
-        db.query('INSERT INTO users SET ?', { name: name, email: email, password: hashedPassword }, (err, results) => {
+        db.query('INSERT INTO users SET ?', { name: name, email: email, password: hashedPassword }, (err) => {
             if (err) {
                 console.log(err);
             } else {

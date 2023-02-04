@@ -1,7 +1,10 @@
+// noinspection JSUnresolvedFunction
+
 const db = require('../routes/db-config');
 const jwt = require('jsonwebtoken');
 
 const loggedIn = (req, res, next) => {
+    // noinspection JSUnresolvedVariable
     if (!req.cookies.userSave) return next();
     try {
         const decoded = jwt.verify(req.cookies.userSave, 'mitrasanyamgarvadavit');

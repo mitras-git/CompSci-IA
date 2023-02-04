@@ -1,9 +1,10 @@
+// noinspection JSCheckFunctionSignatures,JSUnresolvedFunction
+
 const express = require('express');
 const app = express();
 const db = require('./routes/db-config');
 const loggedIn = require('./controllers/loggedIn');
 const cookie = require('cookie-parser');
-const router = require('./controllers/auth');
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html lang="en">
 
 <head>
@@ -68,6 +69,7 @@
   <script>
     const message = decodeURIComponent(document.cookie.split("message=")[1]);
 
+    // noinspection EqualityComparisonWithCoercionJS
     if (message == undefined || message == "undefined" || message == "null" || message == null) {} else {
       const container = document.querySelector(".container");
       if (container) {
