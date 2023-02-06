@@ -30,6 +30,14 @@ app.get('/', loggedIn, (req, res) => {
     }
 });
 
+app.get('/profile', loggedIn, (req, res) => {
+    if (req.user) {
+        res.render('profile', { user: req.user, status: 'loggedIN' });
+    } else {
+        res.render('index', { user: "not logged in", status: 'no' });
+    }
+});
+
 app.get('/register', (req, res) => {
     res.sendFile(__dirname + '/public/register.html');
 });
