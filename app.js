@@ -43,7 +43,6 @@ app.get('/register', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    console.log(__dirname);
     res.sendFile(__dirname + '/public/login.html');
 });
 

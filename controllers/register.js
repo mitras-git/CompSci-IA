@@ -25,13 +25,13 @@ const register = (req, res) => {
         }
 
         let hashedPassword = await bcrypt.hash(password, 8);
-        console.log(hashedPassword);
 
         db.query('INSERT INTO users SET ?', { name: name, email: email, password: hashedPassword }, (err) => {
             if (err) {
                 console.log(err);
             } else {
-                return res.json({ message: 'User registered' });
+                res.cookie("message", "User registered successfully", { maxAge: 1000 });
+                return res.status(200).sendFile(htmlPath + '/register.html');
             }
         })
     })

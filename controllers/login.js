@@ -14,7 +14,8 @@ const login = (req, res) => {
     try {
         const { email, pass } = req.body;
         if (!email || !pass) {
-            return res.json({ status: "error", error: "Please provide an email and password" })
+            res.cookie("message", "Please provide an email and password", { maxAge: 1000 });
+            return res.status(401).sendFile(htmlPath + '/login.html');
         }
         db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
             console.log(results);
@@ -27,8 +28,6 @@ const login = (req, res) => {
                     expiresIn: "2d"
                 });
 
-                console.log("Generated cookie token is " + token);
-
                 const cookieOptions = {
                     expires: new Date(
                         Date.now() + "2" * 24 * 60 * 60 * 1000
@@ -36,7 +35,6 @@ const login = (req, res) => {
                     httpOnly: true
                 }
                 res.cookie('userSave', token, cookieOptions);
-                // return res.json({ status: "success", success:"User has been logged in", data: token });
                 res.status(200).redirect("/");
             }
         })

@@ -70,7 +70,14 @@
     const message = decodeURIComponent(document.cookie.split("message=")[1]);
 
     // noinspection EqualityComparisonWithCoercionJS
-    if (message == undefined || message == "undefined" || message == "null" || message == null) {} else {
+    if (message == undefined || message == "undefined" || message == "null" || message == null) {}
+    else if (message == "User registered successfully") {
+      const container = document.querySelector(".container");
+      if (container) {
+        container.innerHTML += `<h6 class="alert alert-success mt-4" style="text-align: center">${message}</h6>`;
+        document.cookie = "message=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      }
+    } else {
       const container = document.querySelector(".container");
       if (container) {
         container.innerHTML += `<h6 class="alert alert-danger mt-4" style="text-align: center">${message}</h6>`;
