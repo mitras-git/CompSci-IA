@@ -5,7 +5,6 @@ const db = require('../database/db-config');
 const bcrypt = require('bcryptjs');
 const path = require('path');
 const express = require('express');
-const secrets = require('../secrets');
 const app = express();
 
 app.use(express.static(path.join(__dirname, '..' ,"public")));
@@ -25,7 +24,7 @@ const login = (req, res) => {
                 res.status(401).sendFile(htmlPath + '/login.html');
             } else {
                 const id = results[0].id;
-                const token = jwt.sign({ id }, secrets.cookiekey, {
+                const token = jwt.sign({ id }, "mitrasanyamgarvadavit", {
                     expiresIn: "2d"
                 });
 
