@@ -1,6 +1,6 @@
 // noinspection JSUnresolvedFunction
 
-const db = require('../routes/db-config');
+const db = require('../database/db-config');
 const jwt = require('jsonwebtoken');
 
 const loggedIn = (req, res, next) => {

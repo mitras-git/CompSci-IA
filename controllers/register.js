@@ -1,6 +1,6 @@
 // noinspection JSUnresolvedFunction,EqualityComparisonWithCoercionJS
 
-const db = require('../routes/db-config');
+const db = require('../database/db-config');
 const bcrypt = require('bcryptjs');
 const path = require("path");
 const express = require("express");

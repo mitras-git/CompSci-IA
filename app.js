@@ -2,7 +2,7 @@
 
 const express = require('express');
 const app = express();
-const db = require('./routes/db-config');
+const db = require('./database/db-config');
 const loggedIn = require('./controllers/loggedIn');
 const cookie = require('cookie-parser');
 
