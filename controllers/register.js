@@ -9,6 +9,8 @@ const app = express();
 app.use(express.static(path.join(__dirname, '..' ,"public")));
 const htmlPath = path.join(__dirname, '..' ,"public");
 
+let headersSent = false;
+
 const register = (req, res) => {
     const { name, email, password, passwordConfirm } = req.body;
     db.query('SELECT email from users WHERE email = ?', [email], async (err, results) => {
@@ -16,7 +18,7 @@ const register = (req, res) => {
             console.log(err);
         } else {
             if (results.length > 0) {
-                res.cookie("message", "This email already exists", { maxAge: 1000 });
+                res.cookie("message", "An account with this email already exists", { maxAge: 1000 });
                 return res.status(401).sendFile(htmlPath + '/register.html');
             } else if (password != passwordConfirm) {
                 res.cookie("message", "Your passwords did not match", { maxAge: 1000 });

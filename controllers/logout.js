@@ -8,6 +8,7 @@ const logout = (req, res) => {
     console.log('Cookie destruction initiated');
     res.clearCookie('userSave');
     res.status(200).redirect("/");
+    console.log('User successfully logged out');
 }
 
 module.exports = logout;
