@@ -10,61 +10,130 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SQL Home Test</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="/public/css/login.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Home Page</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <% if (status == "loggedIN"){ %>
-            <li class="nav-item">
-            <a class="nav-link" href="/profile">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/auth/logout">Logout</a>
-          </li>
-          <% } else { %>
-          <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/register">Register</a>
-          </li>
-          <% } %>
-        </ul>
-      </div>
-    </div>
-  </nav>
-<div class="container my-5">
-  <div class="card" style="width: 100%">
-    <div class="card-body">
-      <% console.log(status) %>
-      <% if ( status == "loggedIN"){ %>
-        <h5 class="card-title"><%= user.name %>, welcome to NurseMedCall!</h5>
-      <% } else { %>
-      <h5 class="card-title">Welcome to NurseMedCall!</h5>
-      <% } %> 
-      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <% if ( status == "loggedIN"){ %>
-        <button class="btn btn-primary"><a href="/profile" style="color: white; text-decoration: none;">Profile</a></button>
-        <button class="btn btn-primary"><a href="/auth/logout" style="color: white; text-decoration: none;">Logout</a></button>
-        <% } else { %>
-        <button class="btn btn-primary"><a href="/login" style="color: white; text-decoration: none;">Login</a></button>
-        <button class="btn btn-primary"><a href="/register" style="color: white; text-decoration: none;">Register</a></button>
-        <% } %>
-    </div>
-  </div>
+<div class="top-bar">
+    <nav class="navbar navbar-light navbar-expand-md bg-dark" id="top-navbar">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span
+                        class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                            viewBox="0 0 16 16"
+                            class="bi bi-bezier">
+            </svg></span></a>
+            <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-3"><span
+                        class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navcol-3">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link active" style="color: white" href="#">Home Page</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </div>
+<div class="main-content">
+    <div class="container my-5">
+        <div class="card" style="width: 100%">
+            <div class="card-body">
+                <% console.log(status) %>
+                <% if ( status == "loggedIN"){ %>
+                    <h5 class="card-title"><%= user.name %>, welcome to NurseMedCall!</h5>
+                <% } else { %>
+                    <h5 class="card-title">Welcome to NurseMedCall!</h5>
+                <% } %>
+                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+                <% if ( status == "loggedIN"){ %>
+                    <button class="btn btn-primary"><a href="/profile" style="color: white; text-decoration: none;">Profile</a>
+                    </button>
+                    <button class="btn btn-primary"><a href="/auth/logout" style="color: white; text-decoration: none;">Logout</a>
+                    </button>
+                <% } else { %>
+                    <button class="btn btn-primary"><a href="/login"
+                                                       style="color: white; text-decoration: none;">Login</a></button>
+                    <button class="btn btn-primary"><a href="/register" style="color: white; text-decoration: none;">Register</a>
+                    </button>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar bg-dark" id="side-navbar">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <div class="map-image">
+            <img src="images/home map.png" alt="home map" width="150" height="100" id="map_image">
+        </div>
+        <span class="fs-4">Glizzy</span><br>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a href="#" class="nav-link active" aria-current="page">
+                <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#home"></use>
+                </svg>
+                Home
+            </a>
+        </li>
+        <% if (status == "loggedIN"){ %>
+        <li>
+            <a href="/profile" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#speedometer2"></use>
+                </svg>
+                Profile
+            </a>
+        </li>
+        <li>
+            <a href="/auth/logout" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#table"></use>
+                </svg>
+                Logout
+            </a>
+        </li>
+        <% } else { %>
+        <li>
+            <a href="/login" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#grid"></use>
+                </svg>
+                Login
+            </a>
+        </li>
+        <li>
+            <a href="/register" class="nav-link link-dark">
+                <svg class="bi me-2" width="16" height="16">
+                    <use xlink:href="#people-circle"></use>
+                </svg>
+                Register
+            </a>
+        </li>
+        <% } %>
+    </ul>
+    <hr>
+    <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
+       data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="images/avatar.png" alt="" width="32" height="32" class="rounded-circle me-2">
+        <% if ( status == "loggedIN"){ %>
+        <strong><%= user.name %></strong>
+        <% } else { %>
+        <strong>Guest</strong>
+        <% } %>
+    </a>
+    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+<!--        <li><a class="dropdown-item" href="#">New project...</a></li>-->
+<!--        <li><a class="dropdown-item" href="#">Settings</a></li>-->
+        <li><a class="dropdown-item" href="/profile">Profile</a></li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+        <li><a class="dropdown-item" href="/auth/logout">Logout</a></li>
+    </ul>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

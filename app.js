@@ -5,8 +5,9 @@ const app = express();
 const db = require('./database/db-config');
 const loggedIn = require('./controllers/loggedIn');
 const cookie = require('cookie-parser');
+const path = require("path");
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use("/auth", require("./controllers/auth"));
 app.set('view engine', 'ejs');
