@@ -31,6 +31,14 @@ app.get('/', loggedIn, (req, res) => {
     }
 });
 
+app.get('/test', loggedIn, (req, res) => {
+    if (req.user) {
+        res.render('test', { user: req.user, status: 'loggedIN' });
+    } else {
+        res.render('test', { user: "not logged in", status: 'no' });
+    }
+});
+
 app.get('/profile', loggedIn, (req, res) => {
     if (req.user) {
         res.render('profile', { user: req.user, status: 'loggedIN' });

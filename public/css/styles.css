@@ -17,6 +17,13 @@ body {
     background-color: rgb(152, 158, 167) !important;
 }
 
+.welcome-text {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
 #top-navbar, #side-navbar {
     border: 3px solid black;
     border-radius: 5px;
@@ -45,6 +52,17 @@ body {
 
 #map_image {
     float: left;
+}
+
+@media screen and (max-width: 1452px) {
+    .map-image {
+        display: none;
+    }
+    .fs-4 {
+        display: none;
+        height: 0;
+        width: 0;
+    }
 }
 
 .nursepic {
@@ -109,11 +127,16 @@ body {
     margin-top: 1rem;
 }
 
+#dropdownUser1 {
+    margin: 1rem;
+    align-self: center;
+}
+
 .avatar-ctn {
     text-align: center;
 }
 
+
 .avatar {
     width: 65%;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }

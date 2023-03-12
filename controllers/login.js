@@ -12,7 +12,9 @@ const htmlPath = path.join(__dirname, '..' ,"public");
 
 const login = (req, res) => {
     try {
-        const { email, pass } = req.body;
+        console.log(req)
+        const email = req.body.email;
+        const pass = req.body.pass;
         if (!email || !pass) {
             res.cookie("message", "Please provide an email and password", { maxAge: 1000 });
             return res.status(401).sendFile(htmlPath + '/login.html');
