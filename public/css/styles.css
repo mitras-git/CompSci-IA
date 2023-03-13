@@ -71,8 +71,8 @@ body {
 
 .patient-card {
     display: flex;
-    align-items: center; /* Centers child elements vertically */
-    justify-content: space-between; /* Adds space between child elements */
+    align-items: center;
+    justify-content: space-between;
 }
 
 .patient-card-info {
