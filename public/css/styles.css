@@ -17,11 +17,94 @@ body {
     background-color: rgb(152, 158, 167) !important;
 }
 
+.main-content-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+}
+
+.right-side-info {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+.upcoming-events-btn {
+    display: flex;
+    float: left;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+.date-medstock-info {
+    float: left;
+    margin-left: 10px; /* Add some margin to separate the two divs */
+    white-space: nowrap;
+    text-align: right;
+}
+
+.date-view, .med-stock-view {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.todays-date, .med-stock-text {
+    margin-left: 10px;
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
 .welcome-text {
     font-size: 2rem;
     margin-bottom: 1rem;
     margin-top: 1rem;
     margin-left: 1rem;
+}
+
+.card-anchor {
+    text-decoration: none;
+    color: black;
+}
+
+.patient-card {
+    display: flex;
+    align-items: center; /* Centers child elements vertically */
+    justify-content: space-between; /* Adds space between child elements */
+}
+
+.patient-card-info {
+    width: 80%;
+}
+
+.sub-patient-info {
+    gap: 1rem;
+}
+
+.patient-card-pic {
+    width: 20%;
+}
+
+.patient-view, .high-alert-view {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.patients-text, .high-alert-text {
+    flex: 3;
+    text-align: left;
+}
+
+.live-patient-view {
+    flex: 6;
+    text-align: center;
+}
+
+.live-high-alert-view {
+    flex: 6;
+    text-align: center;
 }
 
 #top-navbar, #side-navbar {
