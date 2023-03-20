@@ -71,16 +71,18 @@
                 <div class="col-2">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional
-                                content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <strong>Today's Agenda:</strong>
+                            <p class="card-text">Akhila Mukherjee -> Crocin</p>
+                            <p class="card-text">Madhav Rastogi -> Combiflam</p>
+                            <p class="card-text">Anantraj Kishore -> Ibuprofen</p>
+                            <p class="card-text">Samuel Harrish -> Monophasic</p>
+                            <p class="card-text">Rayan Sandesh -> Loestrin</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-5">
                     <div class="card">
-                        <a href="/profile" class="card-anchor">
+                        <a href="/patient" class="card-anchor">
                             <div class="card-body">
                                 <div class="patient-card">
                                     <div class="patient-card-info">
@@ -91,7 +93,7 @@
                                                     <p class="card-text" style="text-align: left">Patients:</p>
                                                 </div>
                                                 <div class="live-patient-view">
-                                                    <p class="card-text" style="text-align: center">XXX</p>
+                                                    <p class="card-text" style="text-align: center"><strong><%= noPatients %></strong></p>
                                                 </div>
                                             </div>
                                             <div class="high-alert-view">
@@ -114,7 +116,7 @@
                 </div>
                 <div class="col-5">
                     <div class="card">
-                        <a href="/profile" class="card-anchor">
+                        <a href="/pill" class="card-anchor">
                             <div class="card-body">
                                 <div class="patient-card">
                                     <div class="patient-card-info">
@@ -144,6 +146,44 @@
                                 </div>
                             </div>
                         </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="announcements-row">
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            General Hospital Announcements
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <h5 class="card-title text-center">Announcement 1 Title</h5>
+                                <li class="list-group-item">This is the description section of an item</li>
+                                <h5 class="card-title text-center announcements-title">Announcement 2 Title</h5>
+                                <li class="list-group-item">This is the description section of a second item</li>
+                                <h5 class="card-title text-center announcements-title">Announcement 3 Title</h5>
+                                <li class="list-group-item">This is the description section of a third item</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            Administrator Announcements
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <h5 class="card-title text-center">Admin Announcement 1 Title</h5>
+                                <li class="list-group-item">This is the description section of an item</li>
+                                <h5 class="card-title text-center announcements-title">Admin Announcement 2 Title</h5>
+                                <li class="list-group-item">This is the description section of a second item</li>
+                                <h5 class="card-title text-center announcements-title">Admin Announcement 3 Title</h5>
+                                <li class="list-group-item">This is the description section of a third item</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -186,7 +226,7 @@
         <div class="map-image">
             <img src="images/home map.png" alt="home map" width="150" height="100" id="map_image">
         </div>
-        <span class="fs-4">Glizzy</span><br>
+        <span class="fs-4">Nurse</span><br>
     </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">

@@ -12,7 +12,7 @@ const htmlPath = path.join(__dirname, '..' ,"public");
 
 const login = (req, res) => {
     try {
-        console.log(req)
+        console.log(req.body)
         const email = req.body.email;
         const pass = req.body.pass;
         if (!email || !pass) {
