@@ -6,6 +6,8 @@ const db = require('./database/db-config');
 const loggedIn = require('./controllers/loggedIn');
 const addPatient = require('./sql-functions/add-patient')
 const getPatientCount = require('./sql-functions/getPatientCount')
+const getHighAlertCount = require('./sql-functions/getHighAlertCount')
+const getHighAlertList = require('./sql-functions/getHighAlertList')
 const getTable = require('./sql-functions/getTable')
 const addPill = require('./sql-functions/add-pill')
 const cookie = require('cookie-parser');
@@ -14,6 +16,7 @@ const path = require("path");
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use("/auth", require("./controllers/auth"));
+app.use("/update", require("./sql-functions/update"));
 app.set('view engine', 'ejs');
 app.use(cookie());
 app.use(express.json());
@@ -27,17 +30,17 @@ db.connect((err) => {
     }
 });
 
-app.get('/', [loggedIn, getPatientCount], (req, res) => {
+app.get('/', [loggedIn, getPatientCount, getHighAlertCount], (req, res) => {
     if (req.user) {
-        res.render('index', { user: req.user, status: 'loggedIN', noPatients: req.patientCount });
+        res.render('index', { user: req.user, status: 'loggedIN', noPatients: req.patientCount, noHighAlert: req.highAlertCount });
     } else {
         res.render('index', { user: "not logged in", status: 'no' });
     }
 });
 
-app.get('/patient', [loggedIn, getPatientCount, getTable], (req, res) => {
-    if (req.user && req.patientCount && req.tableToRender) {
-        res.render('patient', { user: req.user, status: 'loggedIN', noPatients: req.patientCount, patients: req.tableToRender });
+app.get('/patient', [loggedIn, getPatientCount, getHighAlertCount, getHighAlertList, getTable], (req, res) => {
+    if (req.user) {
+        res.render('patient', { user: req.user, status: 'loggedIN', noPatients: req.patientCount, noHighAlert: req.highAlertCount , patients: req.tableToRender, highAlertList: req.highAlertList });
     } else {
         res.redirect('/')
     }

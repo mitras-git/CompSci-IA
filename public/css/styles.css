@@ -243,9 +243,7 @@ body {
 }
 
 .patient-table {
-    margin-top: 1rem;
-    margin-right: 1rem;
-    margin-left: 1rem;
+    margin: 1rem;
 }
 
 #dropdownUser1 {

@@ -6,7 +6,7 @@ const app = express();
 
 const getTable = (req, res, next) => {
     try {
-        db.query('SELECT name, pills_assigned, family, date_of_admission, Patient_id FROM patients', (err, results) => {
+        db.query('SELECT * FROM patients', (err, results) => {
             if (err) throw err
             const tableToRender = results;
             req.tableToRender = tableToRender;

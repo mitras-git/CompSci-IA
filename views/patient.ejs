@@ -56,11 +56,9 @@
                             <div class="card">
                                 <div class="card-body">
                                     <strong>Patient's On High Alert:</strong>
-                                    <p class="card-text">Akhila Mukherjee</p>
-                                    <p class="card-text">Madhav Rastogi</p>
-                                    <p class="card-text">Anantraj Kishore</p>
-                                    <p class="card-text">Samuel Harrish</p>
-                                    <p class="card-text">Rayan Sandesh</p>
+                                    <% highAlertList.forEach(patient => { %>
+                                        <p class="card-text"><%= patient.name %></p>
+                                    <% }) %>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +85,8 @@
                                                         <p class="card-text" style="text-align: left">On High Alert:</p>
                                                     </div>
                                                     <div class="live-high-alert-view">
-                                                        <p class="card-text" style="text-align: center">XXX</p>
+                                                        <p class="card-text" style="text-align: center">
+                                                            <strong><%= noHighAlert %></strong></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -123,7 +122,7 @@
                                                 <div class="form-floating">
                                                     <input type="text" class="form-control middle"
                                                            placeholder="Family" name="family" id="family">
-                                                    <label for="family">Family (not required; seperate each name with
+                                                    <label for="family">Family (not required; separate each name with
                                                         ",")</label>
                                                 </div>
                                                 <div class="form-floating">
@@ -182,6 +181,7 @@
                 <th scope="col">Pills Assigned</th>
                 <th scope="col">Family</th>
                 <th scope="col">Date of Admission</th>
+                <th scope="col">High Alert</th>
                 <th scope="col">Patient ID</th>
                 <th scope="col"></th>
             </tr>
@@ -193,11 +193,16 @@
                     <td><%= patient.pills_assigned %></td>
                     <td><%= patient.family %></td>
                     <td><%= patient.date_of_admission %></td>
+                    <td><%= patient.on_high_alert %></td>
                     <td><%= patient.Patient_id %></td>
                     <td>
                         <button type="button" class="btn btn-primary dynamic-button" data-bs-toggle="modal"
-                                data-bs-target="#editModal" data-bs-pName="<%= patient.name %>" data-bs-pillsAssign="<%= patient.pills_assigned %>"
-                                data-bs-familyInfo="<%= patient.family %>" data-bs-dateOfAdmission="<%= patient.date_of_admission %>" data-bs-pID="<%= patient.Patient_id %>">Edit
+                                data-bs-target="#editModal" data-bs-pName="<%= patient.name %>"
+                                data-bs-pillsAssign="<%= patient.pills_assigned %>"
+                                data-bs-on_high_alert="<%= patient.on_high_alert %>"
+                                data-bs-familyInfo="<%= patient.family %>"
+                                data-bs-dateOfAdmission="<%= patient.date_of_admission %>"
+                                data-bs-pID="<%= patient.Patient_id %>">Edit
                         </button>
                         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
                              aria-hidden="true">
@@ -208,7 +213,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
-                                    <form action="/updatePatient" method="POST" class="form-addpatient">
+                                    <form action="/update/patient" method="POST" class="form-addpatient">
                                         <div class="modal-body">
                                             <div class="form-floating">
                                                 <input type="text" class="form-control top" placeholder="Name"
@@ -217,7 +222,8 @@
                                                 <label for="fname">Full Name</label>
                                             </div>
                                             <div class="form-floating">
-                                                <input type="text" class="form-control middle" placeholder="pillsAssigned"
+                                                <input type="text" class="form-control middle"
+                                                       placeholder="pillsAssigned"
                                                        name="pillsAssigned" id="pillsAssigned" autocomplete="off"
                                                        required autofocus>
                                                 <label for="fname">Pills Assigned</label>
@@ -234,9 +240,17 @@
                                                 <label for="datepicker">Date of Admission</label>
                                             </div>
                                             <div class="form-floating">
+                                                <select class="form-select middle" name="on_high_alert_select"
+                                                        id="on_high_alert_select">
+                                                    <option selected id="selected_selection" value=""></option>
+                                                    <option value="" id="second_selection"></option>
+                                                </select>
+                                                <label for="floatingSelect">On high alert:</label>
+                                            </div>
+                                            <div class="form-floating">
                                                 <input type="text" class="form-control bottom" placeholder="pID"
                                                        name="pID" id="pID" autocomplete="off"
-                                                       autofocus disabled>
+                                                       autofocus readonly>
                                                 <label for="fname">Patient ID</label>
                                             </div>
                                         </div>
@@ -245,8 +259,12 @@
                                                 Cancel
                                             </button>
                                             <button type="submit" class="btn btn-primary">Update Patient Record</button>
+                                                <button type="button" class="btn btn-danger" id="delete-btn">Delete Record</button>
                                         </div>
                                     </form>
+                                            <form action="/update/patientDelete" method="POST" id="delete-form">
+                                                <input type="hidden" name="pID" id="delete-pID">
+                                            </form>
                                 </div>
                             </div>
                         </div>
@@ -300,11 +318,19 @@
     <ul class="nav nav-pills flex-column mb-auto">
         <% if (status == "loggedIN"){ %>
             <li class="nav-item">
-                <a href="#" class="nav-link active" aria-current="page">
+                <a href="/" class="nav-link link-dark" aria-current="page">
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="#home"></use>
                     </svg>
                     Home
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link active">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#table"></use>
+                    </svg>
+                    Patient Log
                 </a>
             </li>
             <li>
@@ -338,7 +364,7 @@
     } else {
         const dynamicButton = document.querySelector(".dynamic-button");
         if (dynamicButton) {
-            dynamicButton.textContent = "User added successfully! Click here to add another";
+            dynamicButton.textContent = `${message}`;
             document.cookie = "message=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         }
     }
@@ -351,6 +377,7 @@
         const familyInfo = button.getAttribute('data-bs-familyInfo')
         const dateOfAdmission = button.getAttribute('data-bs-dateOfAdmission')
         const pID = button.getAttribute('data-bs-pID')
+        const onHighAlert = button.getAttribute('data-bs-on_high_alert')
 
         const modalTitle = editModal.querySelector('.modal-title')
         const modalNameInput = editModal.querySelector('.modal-body #fname')
@@ -358,6 +385,21 @@
         const modalFamilyInfo = editModal.querySelector('.modal-body #family')
         const modalDateOfAdmission = editModal.querySelector('.modal-body #datepicker')
         const modalPID = editModal.querySelector('.modal-body #pID')
+        const modalOnHighAlert_dropdown = editModal.querySelector('.modal-body #on_high_alert_select')
+        const modalOnHighAlert_select = editModal.querySelector('.modal-body #selected_selection')
+        const modalOnHighAlert_second = editModal.querySelector('.modal-body #second_selection')
+
+        if (onHighAlert == "true") {
+            modalOnHighAlert_select.textContent = "true"
+            modalOnHighAlert_dropdown.options[0].value = "true"
+            modalOnHighAlert_second.textContent = "false"
+            modalOnHighAlert_dropdown.options[1].value = "false"
+        } else {
+            modalOnHighAlert_select.textContent = "false"
+            modalOnHighAlert_dropdown.options[0].value = "false"
+            modalOnHighAlert_second.textContent = "true"
+            modalOnHighAlert_dropdown.options[1].value = "true"
+        }
 
         modalTitle.textContent = `Update ${pName}'s Record`
         modalNameInput.value = pName
@@ -365,6 +407,18 @@
         modalFamilyInfo.value = familyInfo
         modalDateOfAdmission.date = dateOfAdmission
         modalPID.value = pID
+
+        const pIDInput = document.getElementById('pID');
+        const deletePIdInput = document.getElementById('delete-pID');
+
+        deletePIdInput.value = pIDInput.value;
+
+        const deleteBtn = document.getElementById('delete-btn');
+        deleteBtn.addEventListener('click', () => {
+            const deleteForm = document.getElementById('delete-form');
+            deleteForm.submit();
+        });
+
     })
 </script>
 </body>

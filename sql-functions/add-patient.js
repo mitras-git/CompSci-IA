@@ -20,7 +20,6 @@ const add_patient = (req, res) => {
                     return res.render('patient', { user: req.user, status: 'loggedIN' });
                 }
             }
-            //INSERT INTO `patients` (`name`, `pills_assigned`, `family`, `date_of_admission`, `Patient_id`) VALUES ('erty', NULL, 'someone, someone2', '2023-03-01', NULL)
 
             const sql = 'INSERT INTO patients (name, family, date_of_admission) VALUES ( ? , ? , ?)'
             const values = [patient_name, family, date]
