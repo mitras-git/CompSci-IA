@@ -11,7 +11,6 @@ const getHighAlertList = (req, res, next) => {
 
             const highAlertList = results;
             req.highAlertList = highAlertList;
-            console.log('Pa' + req.highAlertList);
             return next();
         })
     } catch (err) {
