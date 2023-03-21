@@ -55,9 +55,9 @@
                         <div class="sticky-note">
                             <div class="card">
                                 <div class="card-body">
-                                    <strong>Patient's On High Alert:</strong>
-                                    <% highAlertList.forEach(patient => { %>
-                                        <p class="card-text"><%= patient.name %></p>
+                                    <strong>Pills Low on Stock:</strong>
+                                    <% pillsLow.forEach(pills => { %>
+                                        <p class="card-text"><%= pills.name %></p>
                                     <% }) %>
                                 </div>
                             </div>
@@ -65,34 +65,32 @@
                     </div>
                     <div class="col-lg-7 col-md-5">
                         <div class="card card-center patient-page-card">
-                            <a href="/patient" class="card-anchor">
+                            <a href="/pill" class="card-anchor">
                                 <div class="card-body">
                                     <div class="patient-card">
                                         <div class="patient-card-info">
-                                            <h5 class="card-title" style="text-align: left">Patient Log</h5>
+                                            <h5 class="card-title" style="text-align: left">Pill Inventory</h5>
                                             <div class="sub-patient-info">
                                                 <div class="patient-view">
                                                     <div class="patients-text">
-                                                        <p class="card-text" style="text-align: left">Patients:</p>
+                                                        <p class="card-text" style="text-align: left">Stock:</p>
                                                     </div>
                                                     <div class="live-patient-view">
-                                                        <p class="card-text" style="text-align: center">
-                                                            <strong><%= noPatients %></strong></p>
+                                                        <p class="card-text" style="text-align: center"><strong><%= noPills %></strong></p>
                                                     </div>
                                                 </div>
                                                 <div class="high-alert-view">
                                                     <div class="high-alert-text">
-                                                        <p class="card-text" style="text-align: left">On High Alert:</p>
+                                                        <p class="card-text" style="text-align: left">Pills Assigned:</p>
                                                     </div>
                                                     <div class="live-high-alert-view">
-                                                        <p class="card-text" style="text-align: center">
-                                                            <strong><%= noHighAlert %></strong></p>
+                                                        <p class="card-text" style="text-align: center"><strong><%= noPillsAssigned %></strong></p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="patient-card-pic">
-                                            <img src="images/patient.png" alt="" width="100%" height="100%">
+                                            <img src="images/pill-img.jpg" alt="" width="100%" height="100%">
                                         </div>
                                     </div>
                                 </div>
@@ -100,48 +98,57 @@
                         </div>
                         <div class="add-button text-center">
                             <button type="button" class="btn btn-primary dynamic-button" data-bs-toggle="modal"
-                                    data-bs-target="#addModal">+ Add
+                                    data-bs-target="#addModal">+ Add Pill
                             </button>
                             <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel"
                                  aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Patient</h1>
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Pill</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                         </div>
-                                        <form action="/addpatient" method="POST" class="form-addpatient">
+                                        <form action="/addpill" method="POST" class="form-addpatient">
                                             <div class="modal-body">
                                                 <div class="form-floating">
                                                     <input type="text" class="form-control top" placeholder="Name"
-                                                           name="patient_fullname" id="fname" autocomplete="off"
+                                                           name="pill_name" id="pill_name" autocomplete="off"
                                                            required autofocus>
-                                                    <label for="fname">Full Name</label>
+                                                    <label for="pill_name">Pill Name</label>
                                                 </div>
                                                 <div class="form-floating">
-                                                    <input type="text" class="form-control middle"
-                                                           placeholder="Family" name="family" id="family">
-                                                    <label for="family">Family (not required; separate each name with
-                                                        ",")</label>
+                                                    <input type="number" class="form-control middle"
+                                                           placeholder="0" name="quantity" id="quantity">
+                                                    <label for="quantity">Quantity</label>
                                                 </div>
                                                 <div class="form-floating">
-                                                    <input type="date" class="form-control bottom"
+                                                    <select name="assigned_patients" id="assigned_patients"
+                                                            class="form-select middle patient-select" multiple>
+                                                        <% pills.forEach(function(pill) { %>
+                                                            <option value="<%= pill.name %>"><%= pill.name %></option>
+                                                        <% }); %>
+                                                    </select>
+                                                    <label for="assigned_patients">Patients to Assign (hold ctrl to select multiple)</label>
+                                                </div>
+                                                <div class="form-floating">
+                                                    <input type="date" class="form-control middle"
                                                            placeholder="date" name='date' id="datepicker"
                                                            autocomplete="off" required>
-                                                    <label for="datepicker">Date of Admission</label>
+                                                    <label for="datepicker">Date of Purchase</label>
                                                 </div>
-                                                <div class="footer">
-                                                    <div class="alert-container">
-
-                                                    </div>
+                                                <div class="form-floating">
+                                                    <input type="number" class="form-control bottom"
+                                                           placeholder="lotno" name='lot_no' id="lot_no"
+                                                           autocomplete="off" required>
+                                                    <label for="lot_no">Lot No.</label>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                                     Cancel
                                                 </button>
-                                                <button type="submit" class="btn btn-primary">+ Add New Patient</button>
+                                                <button type="submit" class="btn btn-primary">+ Add New Pill</button>
                                             </div>
                                         </form>
                                     </div>
@@ -178,34 +185,30 @@
             <thead>
             <tr>
                 <th scope="col">Name</th>
-                <th scope="col">Pills Assigned</th>
-                <th scope="col">Family</th>
-                <th scope="col">Date of Admission</th>
-                <th scope="col">High Alert</th>
-                <th scope="col">Patient ID</th>
+                <th scope="col">Quanity</th>
+                <th scope="col">Patients Assigned</th>
+                <th scope="col">Date of Purchase</th>
+                <th scope="col">Lot No.</th>
                 <th scope="col"></th>
             </tr>
             </thead>
             <tbody class="table-group-divider">
-            <% patients.forEach(function(patient) { %>
+            <% pills.forEach(function(pill) { %>
                 <tr>
-                    <td><strong><%= patient.name %></strong></td>
-                    <td><%= patient.pills_assigned %></td>
-                    <td><%= patient.family %></td>
-                    <td><%= patient.date_of_admission %></td>
-                    <td><%= patient.on_high_alert %></td>
-                    <td><%= patient.Patient_id %></td>
+                    <td><strong><%= pill.name %></strong></td>
+                    <td><%= pill.quantity %></td>
+                    <td><%= pill.patients_assigned %></td>
+                    <td><%= pill.date_of_purchase %></td>
+                    <td><%= pill.lot_no %></td>
                     <td>
                         <button type="button" class="btn btn-primary dynamic-button" data-bs-toggle="modal"
-                                data-bs-target="#editModal" data-bs-pName="<%= patient.name %>"
-                                data-bs-pillsAssign="<%= patient.pills_assigned %>"
-                                data-bs-on_high_alert="<%= patient.on_high_alert %>"
-                                data-bs-familyInfo="<%= patient.family %>"
-                                data-bs-dateOfAdmission="<%= patient.date_of_admission %>"
-                                data-bs-pID="<%= patient.Patient_id %>">Edit
+                                data-bs-target="#editModal" data-bs-pName="<%= pill.name %>"
+                                data-bs-quantity="<%= pill.quantity %>"
+                                data-bs-patients_assinged="<%= pill.patients_assigned %>"
+                                data-bs-dateOfPurchase="<%= pill.date_of_purchase %>"
+                                data-bs-lot_no="<%= pill.lot_no %>">Edit
                         </button>
-                        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
-                             aria-hidden="true">
+                        <div class="modal fade" id="editModal" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -213,58 +216,49 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
-                                    <form action="/update/patient" method="POST" class="form-addpatient">
+                                    <form action="/update/pill" method="POST" class="form-addpatient">
                                         <div class="modal-body">
                                             <div class="form-floating">
                                                 <input type="text" class="form-control top" placeholder="Name"
-                                                       name="patient_fullname" id="fname" autocomplete="off"
+                                                       name="pill_name" id="pill_name" autocomplete="off"
                                                        required autofocus>
-                                                <label for="fname">Full Name</label>
+                                                <label for="pill_name">Pill Name</label>
                                             </div>
                                             <div class="form-floating">
-                                                <input type="text" class="form-control middle"
-                                                       placeholder="pillsAssigned"
-                                                       name="pillsAssigned" id="pillsAssigned" autocomplete="off"
-                                                       required >
-                                                <label for="fname">Pills Assigned</label>
+                                                <input type="number" class="form-control middle"
+                                                       placeholder="0" name="quantity" id="quantity">
+                                                <label for="quantity">Quantity</label>
                                             </div>
                                             <div class="form-floating">
-                                                <input type="text" class="form-control middle"
-                                                       placeholder="Family" name="family" id="family">
-                                                <label for="family">Family</label>
+                                                <input type="text" class="form-control middle" placeholder="Name"
+                                                       name="patients_assinged" id="patients_assinged" autocomplete="off"
+                                                       required autofocus>
+                                                <label for="patients_assinged">Patients to Assign (hold ctrl to select multiple)</label>
                                             </div>
                                             <div class="form-floating">
                                                 <input type="date" class="form-control middle"
                                                        placeholder="date" name='date' id="datepicker"
                                                        autocomplete="off" required>
-                                                <label for="datepicker">Date of Admission</label>
+                                                <label for="datepicker">Date of Purchase</label>
                                             </div>
                                             <div class="form-floating">
-                                                <select class="form-select middle" name="on_high_alert_select"
-                                                        id="on_high_alert_select">
-                                                    <option selected id="selected_selection" value=""></option>
-                                                    <option value="" id="second_selection"></option>
-                                                </select>
-                                                <label for="floatingSelect">On high alert:</label>
-                                            </div>
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control bottom" placeholder="pID"
-                                                       name="pID" id="pID" autocomplete="off"
-                                                       autofocus readonly>
-                                                <label for="fname">Patient ID</label>
+                                                <input type="number" class="form-control bottom"
+                                                       placeholder="lotno" name='lot_no' id="lot_no"
+                                                       autocomplete="off" required>
+                                                <label for="lot_no">Lot No.</label>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                                 Cancel
                                             </button>
-                                            <button type="submit" class="btn btn-primary">Update Patient Record</button>
-                                                <button type="button" class="btn btn-danger" id="delete-btn">Delete Record</button>
+                                            <button type="submit" class="btn btn-primary">Update Pill Record</button>
+                                            <button type="button" class="btn btn-danger" id="delete-btn">Delete Record</button>
                                         </div>
                                     </form>
-                                            <form action="/update/patientDelete" method="POST" id="delete-form">
-                                                <input type="hidden" name="pID" id="delete-pID">
-                                            </form>
+                                    <form action="/update/pillDelete" method="POST" id="delete-form">
+                                        <input type="hidden" name="deleteName" id="toDeleteName">
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -330,7 +324,7 @@
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="#table"></use>
                     </svg>
-                    Patient Log
+                    Pill Log
                 </a>
             </li>
             <li>
@@ -373,52 +367,35 @@
     editModal.addEventListener('show.bs.modal', event => {
         const button = event.relatedTarget
         const pName = button.getAttribute('data-bs-pName')
-        const pillAssigned = button.getAttribute('data-bs-pillsAssign')
-        const familyInfo = button.getAttribute('data-bs-familyInfo')
-        const dateOfAdmission = button.getAttribute('data-bs-dateOfAdmission')
-        const pID = button.getAttribute('data-bs-pID')
-        const onHighAlert = button.getAttribute('data-bs-on_high_alert')
+        const quantity = button.getAttribute('data-bs-quantity')
+        const patients_assinged = button.getAttribute('data-bs-patients_assinged')
+        const dateOfPurchase = button.getAttribute('data-bs-dateOfPurchase')
+        const lotNo = button.getAttribute('data-bs-lot_no')
 
         const modalTitle = editModal.querySelector('.modal-title')
-        const modalNameInput = editModal.querySelector('.modal-body #fname')
-        const modalPillsAssigned = editModal.querySelector('.modal-body #pillsAssigned')
-        const modalFamilyInfo = editModal.querySelector('.modal-body #family')
-        const modalDateOfAdmission = editModal.querySelector('.modal-body #datepicker')
-        const modalPID = editModal.querySelector('.modal-body #pID')
-        const modalOnHighAlert_dropdown = editModal.querySelector('.modal-body #on_high_alert_select')
-        const modalOnHighAlert_select = editModal.querySelector('.modal-body #selected_selection')
-        const modalOnHighAlert_second = editModal.querySelector('.modal-body #second_selection')
+        const modalNameInput = editModal.querySelector('.modal-body #pill_name')
+        const modalQuantity = editModal.querySelector('.modal-body #quantity')
+        const modalPatientsAssigned = editModal.querySelector('.modal-body #patients_assinged')
+        const modalDateOfPurchase = editModal.querySelector('.modal-body #datepicker')
+        const modalLot_No = editModal.querySelector('.modal-body #lot_no')
 
-        if (onHighAlert == "true") {
-            modalOnHighAlert_select.textContent = "true"
-            modalOnHighAlert_dropdown.options[0].value = "true"
-            modalOnHighAlert_second.textContent = "false"
-            modalOnHighAlert_dropdown.options[1].value = "false"
-        } else {
-            modalOnHighAlert_select.textContent = "false"
-            modalOnHighAlert_dropdown.options[0].value = "false"
-            modalOnHighAlert_second.textContent = "true"
-            modalOnHighAlert_dropdown.options[1].value = "true"
-        }
-
-        modalTitle.textContent = `Update ${pName}'s Record`
+        modalTitle.textContent = `Update ${pName} Record`
         modalNameInput.value = pName
-        modalPillsAssigned.value = pillAssigned
-        modalFamilyInfo.value = familyInfo
-        modalDateOfAdmission.date = dateOfAdmission
-        modalPID.value = pID
+        modalQuantity.value = quantity
+        modalPatientsAssigned.value = patients_assinged
+        modalDateOfPurchase.date = dateOfPurchase
+        modalLot_No.value = lotNo
 
-        const pIDInput = document.getElementById('pID');
-        const deletePIdInput = document.getElementById('delete-pID');
+        const nameInput = document.getElementById('pill_name');
+        const deletePillNameInput = document.getElementById('toDeleteName');
 
-        deletePIdInput.value = pIDInput.value;
+        deletePillNameInput.value = pName;
 
         const deleteBtn = document.getElementById('delete-btn');
         deleteBtn.addEventListener('click', () => {
             const deleteForm = document.getElementById('delete-form');
             deleteForm.submit();
         });
-
     })
 </script>
 </body>

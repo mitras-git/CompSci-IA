@@ -9,7 +9,6 @@ app.use(express.static(path.join(__dirname, '..', "public")));
 
 const updatePatient = (req, res) => {
     try {
-        console.log(req.body);
         const name = req.body.patient_fullname;
         const pillsAssigned = req.body.pillsAssigned;
         const family = req.body.family

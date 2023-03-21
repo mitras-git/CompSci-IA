@@ -84,6 +84,10 @@ body {
     flex: 6;
 }
 
+.form-select {
+    height: 8rem !important;
+}
+
 .welcome-text {
     font-size: 2rem;
     margin-bottom: 1rem;

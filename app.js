@@ -6,9 +6,13 @@ const db = require('./database/db-config');
 const loggedIn = require('./controllers/loggedIn');
 const addPatient = require('./sql-functions/add-patient')
 const getPatientCount = require('./sql-functions/getPatientCount')
+const getPillStockCount = require('./sql-functions/getPillStockCount')
+const getPillAssignedCount = require('./sql-functions/getPillAssignedCount')
+const getPillLowStock = require('./sql-functions/getPillLowStock')
 const getHighAlertCount = require('./sql-functions/getHighAlertCount')
 const getHighAlertList = require('./sql-functions/getHighAlertList')
 const getTable = require('./sql-functions/getTable')
+const getTablePill = require('./sql-functions/getTablePill')
 const addPill = require('./sql-functions/add-pill')
 const cookie = require('cookie-parser');
 const path = require("path");
@@ -30,9 +34,9 @@ db.connect((err) => {
     }
 });
 
-app.get('/', [loggedIn, getPatientCount, getHighAlertCount], (req, res) => {
+app.get('/', [loggedIn, getPatientCount, getPillStockCount, getHighAlertCount, getPillAssignedCount], (req, res) => {
     if (req.user) {
-        res.render('index', { user: req.user, status: 'loggedIN', noPatients: req.patientCount, noHighAlert: req.highAlertCount });
+        res.render('index', { user: req.user, status: 'loggedIN', noPatients: req.patientCount, noPills: req.pillStockCount, noHighAlert: req.highAlertCount, noPillsAssigned: req.pillAssignedCount });
     } else {
         res.render('index', { user: "not logged in", status: 'no' });
     }
@@ -46,7 +50,16 @@ app.get('/patient', [loggedIn, getPatientCount, getHighAlertCount, getHighAlertL
     }
 });
 
+app.get('/pill', [loggedIn, getPillStockCount, getHighAlertList, getTablePill, getPillAssignedCount, getPillLowStock], (req, res) => {
+    if (req.user) {
+        res.render('pill', { user: req.user, status: 'loggedIN', noPills: req.pillStockCount, noPillsAssigned: req.pillAssignedCount , pills: req.tableToRender, pillsLow: req.pillLowStock , highAlertList: req.highAlertList });
+    } else {
+        res.redirect('/')
+    }
+});
+
 app.post('/addpatient', addPatient);
+app.post('/addpill', addPill);
 
 app.get('/test', loggedIn, (req, res) => {
     if (req.user) {
