@@ -84,10 +84,6 @@ body {
     flex: 6;
 }
 
-.form-select {
-    height: 8rem !important;
-}
-
 .welcome-text {
     font-size: 2rem;
     margin-bottom: 1rem;
@@ -145,7 +141,7 @@ body {
     float: right;
 }
 
-.announcements-row {
+.announcements-row, .patient-row {
     margin-top: 1rem;
     margin-right: 1rem;
     margin-left: 1rem;
@@ -259,7 +255,10 @@ body {
     text-align: center;
 }
 
-
 .avatar {
     width: 65%;
+}
+
+.admin-add-button, .admin-edit-button {
+    margin-top: 1rem;
 }

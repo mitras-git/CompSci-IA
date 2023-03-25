@@ -7,8 +7,6 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, '..', "public")));
 
-
-
 const updatePill = (req, res) => {
     try {
         console.log(req.body)
