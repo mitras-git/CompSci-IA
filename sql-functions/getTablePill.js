@@ -9,7 +9,7 @@ const getTablePill = (req, res, next) => {
         db.query('SELECT * FROM pills', (err, results) => {
             if (err) throw err
             const tableToRender = results;
-            req.tableToRender = tableToRender;
+            req.pillTableToRender = tableToRender;
             return next();
         })
     } catch (err) {

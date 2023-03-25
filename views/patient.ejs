@@ -160,12 +160,15 @@
                                     </div>
                                 </div>
                                 <div class="med-stock-view">
-                                    <div class="medication-stock-text">
-                                        <span>Medication Stock:</span>
-                                    </div>
-                                    <div class="med-status">
-                                        <strong><p class="med-stock-text">LOW/MED/OK</p></strong>
-                                    </div>
+                                    <span>Medication Stock:</span><strong>
+                                        <% if (noPills <= 20) { %>
+                                            <p class="med-stock-text" style="color: red;">LOW</p>
+                                        <% } else if (noPills > 20 && noPills <= 100) { %>
+                                            <p class="med-stock-text" style="color: orange;">MED</p>
+                                        <% } else { %>
+                                            <p class="med-stock-text" style="color: green;">OK</p>
+                                        <% } %>
+                                    </strong>
                                 </div>
                             </div>
                         </div>
@@ -366,6 +369,15 @@
             dynamicButton.textContent = `${message}`;
             document.cookie = "message=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         }
+    }
+
+    const medStockText = document.querySelector('.med-stock-text');
+
+    if (medStockText.textContent === 'LOW') {
+        function blink() {
+            medStockText.style.visibility = medStockText.style.visibility === 'hidden' ? 'visible' : 'hidden';
+        }
+        setInterval(blink, 500);
     }
 
     const editModal = document.getElementById('editModal')

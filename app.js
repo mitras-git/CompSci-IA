@@ -4,6 +4,8 @@ const express = require('express');
 const app = express();
 const db = require('./database/db-config');
 const loggedIn = require('./controllers/loggedIn');
+const getGeneralPost = require('./sql-functions/getGeneralPost');
+const getAdminPost = require('./sql-functions/getAdminPost');
 const addPatient = require('./sql-functions/add-patient')
 const getPatientCount = require('./sql-functions/getPatientCount')
 const getPillStockCount = require('./sql-functions/getPillStockCount')
@@ -13,9 +15,12 @@ const getHighAlertCount = require('./sql-functions/getHighAlertCount')
 const getHighAlertList = require('./sql-functions/getHighAlertList')
 const getTable = require('./sql-functions/getTable')
 const getTablePill = require('./sql-functions/getTablePill')
+const getUsers = require('./sql-functions/getUsers')
 const addPill = require('./sql-functions/add-pill')
+const addPost = require('./sql-functions/addPost')
 const cookie = require('cookie-parser');
 const path = require("path");
+const _ = require('lodash');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
@@ -34,25 +39,33 @@ db.connect((err) => {
     }
 });
 
-app.get('/', [loggedIn, getPatientCount, getPillStockCount, getHighAlertCount, getPillAssignedCount], (req, res) => {
+app.get('/', [loggedIn, getPatientCount, getPillStockCount, getHighAlertCount, getPillAssignedCount, getGeneralPost, getAdminPost, getUsers], (req, res) => {
     if (req.user) {
-        res.render('index', { user: req.user, status: 'loggedIN', noPatients: req.patientCount, noPills: req.pillStockCount, noHighAlert: req.highAlertCount, noPillsAssigned: req.pillAssignedCount });
+        res.render('index', { user: req.user, status: 'loggedIN', noPatients: req.patientCount, noPills: req.pillStockCount, users: req.usersToRender ,noHighAlert: req.highAlertCount, noPillsAssigned: req.pillAssignedCount, posts: req.postsToRender, adminPosts: req.adminPostsToRender });
     } else {
         res.render('index', { user: "not logged in", status: 'no' });
     }
 });
 
-app.get('/patient', [loggedIn, getPatientCount, getHighAlertCount, getHighAlertList, getTable], (req, res) => {
+app.get('/patient', [loggedIn, getPatientCount, getPillStockCount, getHighAlertCount, getHighAlertList, getTable], (req, res) => {
     if (req.user) {
-        res.render('patient', { user: req.user, status: 'loggedIN', noPatients: req.patientCount, noHighAlert: req.highAlertCount , patients: req.tableToRender, highAlertList: req.highAlertList });
+        res.render('patient', { user: req.user, status: 'loggedIN', noPills: req.pillStockCount, noPatients: req.patientCount, noHighAlert: req.highAlertCount , patients: req.tableToRender, highAlertList: req.highAlertList });
     } else {
         res.redirect('/')
     }
 });
 
-app.get('/pill', [loggedIn, getPillStockCount, getHighAlertList, getTablePill, getPillAssignedCount, getPillLowStock], (req, res) => {
+app.get('/pill', [loggedIn, getPillStockCount, getHighAlertList, getTablePill, getPillAssignedCount, getPillLowStock, getTable], (req, res) => {
     if (req.user) {
-        res.render('pill', { user: req.user, status: 'loggedIN', noPills: req.pillStockCount, noPillsAssigned: req.pillAssignedCount , pills: req.tableToRender, pillsLow: req.pillLowStock , highAlertList: req.highAlertList });
+        res.render('pill', { user: req.user, status: 'loggedIN', noPills: req.pillStockCount, noPillsAssigned: req.pillAssignedCount , patients:req.tableToRender, pills: req.pillTableToRender, pillsLow: req.pillLowStock , highAlertList: req.highAlertList });
+    } else {
+        res.redirect('/')
+    }
+});
+
+app.get('/post/:postName', [loggedIn, getGeneralPost], (req, res) => {
+    if (req.user) {
+        res.render('post', { user: req.user, status: 'loggedIN', postTitle: req.postTitle, postBody: req.postBody });
     } else {
         res.redirect('/')
     }
@@ -60,6 +73,7 @@ app.get('/pill', [loggedIn, getPillStockCount, getHighAlertList, getTablePill, g
 
 app.post('/addpatient', addPatient);
 app.post('/addpill', addPill);
+app.post('/addpost', addPost);
 
 app.get('/test', loggedIn, (req, res) => {
     if (req.user) {
