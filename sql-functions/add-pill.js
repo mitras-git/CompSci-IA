@@ -10,6 +10,7 @@ const add_pill = (req, res) => {
         const pill_name = req.body.pill_name;
         const quantity = req.body.quantity;
         var assigned_to = req.body.assigned_patients;
+        const changeUser = req.body.changeMadeBy;
 
         if (Array.isArray(assigned_to)) {
             assigned_to = JSON.stringify(assigned_to);
@@ -30,8 +31,8 @@ const add_pill = (req, res) => {
                 }
             }
 
-            const sql = 'INSERT INTO pills (name, quantity, patients_assigned, date_of_purchase, lot_no) VALUES ( ? , ? , ? , ? , ?)'
-            const values = [pill_name, quantity, assigned_to, date, lot_no]
+            const sql = 'INSERT INTO pills (name, quantity, patients_assigned, date_of_purchase, lot_no, last_change) VALUES ( ? , ? , ? , ? , ?, ?)'
+            const values = [pill_name, quantity, assigned_to, date, lot_no, changeUser]
 
             db.query(sql, values, (err) => {
                 if (err) {

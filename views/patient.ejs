@@ -55,6 +55,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <strong>Patient's On High Alert:</strong>
+                                    <% const username = user.email %>
                                     <% highAlertList.forEach(patient => { %>
                                         <p class="card-text"><%= patient.name %></p>
                                     <% }) %>
@@ -125,11 +126,17 @@
                                                         ",")</label>
                                                 </div>
                                                 <div class="form-floating">
+                                                    <input type="text" class="form-control middle"
+                                                           placeholder="insurance" name="insurance" id="insurance" autocomplete="off">
+                                                    <label for="insurance">Insurance No.</label>
+                                                </div>
+                                                <div class="form-floating">
                                                     <input type="date" class="form-control bottom"
                                                            placeholder="date" name='date' id="datepicker"
                                                            autocomplete="off" required>
                                                     <label for="datepicker">Date of Admission</label>
                                                 </div>
+                                                <input type="hidden" name="changeMadeBy" id="changeMadeBy" value="<%= username %>">
                                                 <div class="footer">
                                                     <div class="alert-container">
 
@@ -183,6 +190,7 @@
                 <th scope="col">Pills Assigned</th>
                 <th scope="col">Family</th>
                 <th scope="col">Date of Admission</th>
+                <th scope="col">Insurance No.</th>
                 <th scope="col">High Alert</th>
                 <th scope="col">Patient ID</th>
                 <th scope="col"></th>
@@ -194,7 +202,8 @@
                     <td><strong><%= patient.name %></strong></td>
                     <td><%= patient.pills_assigned %></td>
                     <td><%= patient.family %></td>
-                    <td><%= patient.date_of_admission %></td>
+                    <td><%= patient.date_of_admission.toLocaleDateString('en-GB', {weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'}) %></td>
+                    <td><%= patient.insurance_number %></td>
                     <td><%= patient.on_high_alert %></td>
                     <td><%= patient.Patient_id %></td>
                     <td>
@@ -203,6 +212,7 @@
                                 data-bs-pillsAssign="<%= patient.pills_assigned %>"
                                 data-bs-on_high_alert="<%= patient.on_high_alert %>"
                                 data-bs-familyInfo="<%= patient.family %>"
+                                data-bs-insuranceInfo="<%= patient.insurance_number %>"
                                 data-bs-dateOfAdmission="<%= patient.date_of_admission %>"
                                 data-bs-pID="<%= patient.Patient_id %>">Edit
                         </button>
@@ -242,6 +252,11 @@
                                                 <label for="datepicker">Date of Admission</label>
                                             </div>
                                             <div class="form-floating">
+                                                <input type="text" class="form-control middle"
+                                                       placeholder="insurance" name="insurance" id="insurance" autocomplete="off">
+                                                <label for="insurance">Insurance No.</label>
+                                            </div>
+                                            <div class="form-floating">
                                                 <select class="form-select middle" name="on_high_alert_select"
                                                         id="on_high_alert_select">
                                                     <option selected id="selected_selection" value=""></option>
@@ -255,6 +270,7 @@
                                                        autofocus readonly>
                                                 <label for="fname">Patient ID</label>
                                             </div>
+                                            <input type="hidden" name="changeMadeBy" id="changeMadeBy" value="<%= username %>">
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -387,6 +403,7 @@
         const pillAssigned = button.getAttribute('data-bs-pillsAssign')
         const familyInfo = button.getAttribute('data-bs-familyInfo')
         const dateOfAdmission = button.getAttribute('data-bs-dateOfAdmission')
+        const insurance = button.getAttribute('data-bs-insuranceInfo')
         const pID = button.getAttribute('data-bs-pID')
         const onHighAlert = button.getAttribute('data-bs-on_high_alert')
 
@@ -395,6 +412,7 @@
         const modalPillsAssigned = editModal.querySelector('.modal-body #pillsAssigned')
         const modalFamilyInfo = editModal.querySelector('.modal-body #family')
         const modalDateOfAdmission = editModal.querySelector('.modal-body #datepicker')
+        const modalInsurance = editModal.querySelector('.modal-body #insurance')
         const modalPID = editModal.querySelector('.modal-body #pID')
         const modalOnHighAlert_dropdown = editModal.querySelector('.modal-body #on_high_alert_select')
         const modalOnHighAlert_select = editModal.querySelector('.modal-body #selected_selection')
@@ -417,6 +435,7 @@
         modalPillsAssigned.value = pillAssigned
         modalFamilyInfo.value = familyInfo
         modalDateOfAdmission.date = dateOfAdmission
+        modalInsurance.value = insurance
         modalPID.value = pID
 
         const pIDInput = document.getElementById('pID');

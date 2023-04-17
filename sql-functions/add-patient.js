@@ -10,6 +10,8 @@ const add_patient = (req, res) => {
         const patient_name = req.body.patient_fullname;
         const family = req.body.family;
         const date = req.body.date;
+        const changeUser = req.body.changeMadeBy;
+        const insurance = req.body.insurance;
 
         db.query('SELECT name from patients WHERE name = ?', [patient_name], async (err, results) => {
             if (err) {
@@ -21,8 +23,8 @@ const add_patient = (req, res) => {
                 }
             }
 
-            const sql = 'INSERT INTO patients (name, family, date_of_admission) VALUES ( ? , ? , ?)'
-            const values = [patient_name, family, date]
+            const sql = 'INSERT INTO patients (name, family, date_of_admission, last_change, insurance_number) VALUES ( ? , ? , ?, ?, ?)'
+            const values = [patient_name, family, date, changeUser, insurance]
 
             db.query( sql, values , (err) => {
                 if (err) {

@@ -109,6 +109,7 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                         </div>
+                                        <% const username = user.email %>
                                         <form action="/addpill" method="POST" class="form-addpatient">
                                             <div class="modal-body">
                                                 <div class="form-floating">
@@ -143,6 +144,7 @@
                                                            autocomplete="off" required>
                                                     <label for="lot_no">Lot No.</label>
                                                 </div>
+                                                <input type="hidden" name="changeMadeBy" id="changeMadeBy" value="<%= username %>">
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -201,7 +203,7 @@
                     <td><strong><%= pill.name %></strong></td>
                     <td><%= pill.quantity %></td>
                     <td><%= pill.patients_assigned %></td>
-                    <td><%= pill.date_of_purchase %></td>
+                    <td><%= pill.date_of_purchase.toLocaleDateString('en-GB', {weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'}) %></td>
                     <td><%= pill.lot_no %></td>
                     <td>
                         <button type="button" class="btn btn-primary dynamic-button" data-bs-toggle="modal"
@@ -250,6 +252,7 @@
                                                        autocomplete="off" required>
                                                 <label for="lot_no">Lot No.</label>
                                             </div>
+                                            <input type="hidden" name="changeMadeBy" id="changeMadeBy" value="<%= username %>">
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

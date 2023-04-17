@@ -81,11 +81,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <strong>Today's Agenda:</strong>
-                                <p class="card-text">Akhila Mukherjee -> Crocin</p>
-                                <p class="card-text">Madhav Rastogi -> Combiflam</p>
-                                <p class="card-text">Anantraj Kishore -> Ibuprofen</p>
-                                <p class="card-text">Samuel Harrish -> Monophasic</p>
-                                <p class="card-text">Rayan Sandesh -> Loestrin</p>
+                                <p class="card-text">John Doe -> Crocin</p>
+<!--                                <p class="card-text">Jane Doe -> Ibuprofen</p>-->
+<!--                                <p class="card-text">Jackson DeVries -> Paracetemol</p>-->
                             </div>
                         </div>
                     </div>
@@ -642,6 +640,24 @@
     </ul>
 </div>
 <script>
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    const todaysDate = `${dd}/${mm}/${yyyy}`;
+    document.querySelector('.todays-date').textContent = todaysDate;
+
+    const medStockText = document.querySelector('.med-stock-text');
+
+    if (medStockText.textContent === 'LOW') {
+        function blink() {
+            medStockText.style.visibility = medStockText.style.visibility === 'hidden' ? 'visible' : 'hidden';
+        }
+
+        setInterval(blink, 500);
+    }
+</script>
+<script>
     const now = new Date();
 
     const suffixes = {
@@ -734,23 +750,6 @@
         deletePostType.value = type;
         deletePostInput.value = _id;
     })
-
-    const today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const yyyy = today.getFullYear();
-    const todaysDate = `${dd}/${mm}/${yyyy}`;
-    document.querySelector('.todays-date').textContent = todaysDate;
-
-    const medStockText = document.querySelector('.med-stock-text');
-
-    if (medStockText.textContent === 'LOW') {
-        function blink() {
-            medStockText.style.visibility = medStockText.style.visibility === 'hidden' ? 'visible' : 'hidden';
-        }
-
-        setInterval(blink, 500);
-    }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -13,11 +13,13 @@ const updatePatient = (req, res) => {
         const pillsAssigned = req.body.pillsAssigned;
         const family = req.body.family
         const date = req.body.date;
+        const changeBy = req.body.changeMadeBy
         const onHighAlert = req.body.on_high_alert_select;
+        const insurance = req.body.insurance;
         const id = req.body.pID;
 
-        const sql = 'UPDATE patients SET name = ?, pills_assigned = ?, family = ?, date_of_admission = ?, on_high_alert = ? WHERE Patient_id = ?'
-        const values = [name, pillsAssigned, family, date, onHighAlert, id ]
+        const sql = 'UPDATE patients SET name = ?, pills_assigned = ?, family = ?, date_of_admission = ?, on_high_alert = ?, insurance_number = ?, last_change = ? WHERE Patient_id = ?'
+        const values = [name, pillsAssigned, family, date, onHighAlert, insurance, changeBy, id]
 
         db.query(sql, values, (err) => {
             if (err) {
