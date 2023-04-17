@@ -22,6 +22,8 @@ const cookie = require('cookie-parser');
 const path = require("path");
 const _ = require('lodash');
 
+const port = process.env.PORT || 3000;
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use("/auth", require("./controllers/auth"));
@@ -99,6 +101,6 @@ app.get('/login', (req, res) => {
     res.sendFile(__dirname + '/public/login.html');
 });
 
-app.listen(3000, () => {
-    console.log('App listening on port 3000');
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
