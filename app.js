@@ -22,7 +22,7 @@ const cookie = require('cookie-parser');
 const path = require("path");
 const _ = require('lodash');
 
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
@@ -37,7 +37,7 @@ db.connect((err) => {
         console.log(err);
         console.log('Error connecting to database');
     } else {
-        console.log('Connected to MySQL');
+        console.log('Connected to MySQL as ID: ' + db.threadId);
     }
 });
 
